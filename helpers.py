@@ -31,7 +31,7 @@ def input(text):
         data = line
     set_temp("INPUT_TIME", get_temp("INPUT_TIME") + time.time() - start_time)  # установка времени запроса данных
 
-    return data
+    return data.rstrip("\n")
 
 
 def end_task():
