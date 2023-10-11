@@ -1,3 +1,4 @@
+"""Домашка с основами питона"""
 import math
 
 from helpers import input

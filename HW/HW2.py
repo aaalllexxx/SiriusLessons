@@ -1,3 +1,7 @@
+"""Домашка со строками"""
+from helpers import input
+
+
 def task1():
     print(input("Введите строку:") + input("Введите строку:"))
 
