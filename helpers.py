@@ -1,3 +1,4 @@
+import fileinput
 import json
 import os.path
 import sys
@@ -21,17 +22,24 @@ def set_temp(key, value):
         file.close()
 
 
+def count_input(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()  # время старта
+        data = func(*args, **kwargs)
+        set_temp("INPUT_TIME", get_temp("INPUT_TIME") + time.time() - start_time)  # установка времени запроса данных
+        return data
+    return wrapper
+
+
 # реализация метода input, записывающая во временный файл время запроса данных
+@count_input
 def input(text):
-    start_time = time.time()  # время старта
-    sys.stdout.write(text+"")  # вывод сообщения
+    sys.stdout.write(text)
     sys.stdout.flush()
     data = ""
-    for line in sys.stdin.readlines(1):  # построчный ввод
-        data = line
-    set_temp("INPUT_TIME", get_temp("INPUT_TIME") + time.time() - start_time)  # установка времени запроса данных
-
-    return data.rstrip("\n")
+    while (letter := sys.stdin.read(1)) != "\n":
+        data += letter
+    return data
 
 
 def end_task():
